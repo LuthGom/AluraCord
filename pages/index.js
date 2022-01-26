@@ -1,37 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import appConfig from "../config.json";
 import { Box, Button, Text, TextField, Image } from "@skynexui/components";
+import axios from "axios";
 
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: "Open Sans", sans-serif;
-      }
-      /* App fit Height */
-      html,
-      body,
-      #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */
-    `}</style>
-  );
-}
 function Titulo(props) {
   const Tag = props.tag;
   return (
@@ -47,12 +19,28 @@ function Titulo(props) {
     </>
   );
 }
+
 export default function PaginaInicial() {
-  const username = "LuthGom";
+  const [userName, setUserName] = useState("LuthGom");
+  const [obj, setObj] = useState("");
+  const roteamento = useRouter(obj);
+  useEffect(() => {
+    const profileGit = async function () {
+     await fetch(`https://api.github.com/users/${userName}`)
+        .then((resp) => resp.json())
+        .then((data) => {
+          setObj(data);
+          console.log(data);
+        })
+        .catch((erro) => {
+          console.log(erro);
+        });
+    };
+    profileGit();
+  }, []);
 
   return (
     <>
-      <GlobalStyle />
       <Box
         styleSheet={{
           display: "flex",
@@ -113,27 +101,12 @@ export default function PaginaInicial() {
             >
               {appConfig.name}
             </Text>
-            {/* <input
-                            type="text"
-                            value={username}
-                            onChange={function (event) {
-                                console.log('usuario digitou', event.target.value);
-                                // Onde ta o valor?
-                                const valor = event.target.value;
-                                // Trocar o valor da variavel
-                                // através do React e avise quem precisa
-                                setUsername(valor);
-                            }}
-                        /> */}
+
             <TextField
-              
               onChange={function (event) {
                 console.log("usuario digitou", event.target.value);
-                // Onde ta o valor?
                 const valor = event.target.value;
-                // Trocar o valor da variavel
-                // através do React e avise quem precisa
-                setUsername(valor);
+                setUserName(valor);
               }}
               fullWidth
               textFieldColors={{
@@ -180,7 +153,7 @@ export default function PaginaInicial() {
                 borderRadius: "50%",
                 marginBottom: "16px",
               }}
-              src={`https://github.com/${username}.png`}
+              src={`https://github.com/${userName}.png`}
             />
             <Text
               variant="body4"
@@ -191,7 +164,29 @@ export default function PaginaInicial() {
                 borderRadius: "1000px",
               }}
             >
-              {username}
+              {userName}
+            </Text>
+            <Text
+              variant="body4"
+              styleSheet={{
+                color: appConfig.theme.colors.neutrals[200],
+                backgroundColor: appConfig.theme.colors.neutrals[900],
+                padding: "3px 10px",
+                borderRadius: "1000px",
+              }}
+            >
+              {obj.name}
+            </Text>
+            <Text
+              variant="body4"
+              styleSheet={{
+                color: appConfig.theme.colors.neutrals[200],
+                backgroundColor: appConfig.theme.colors.neutrals[900],
+                padding: "3px 10px",
+                borderRadius: "1000px",
+              }}
+            >
+              {obj.twitter_username}
             </Text>
           </Box>
           {/* Photo Area */}
