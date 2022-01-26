@@ -23,13 +23,13 @@ function Titulo(props) {
 export default function PaginaInicial() {
   const [userName, setUserName] = useState("LuthGom");
   const [obj, setObj] = useState("");
-  const roteamento = useRouter(obj);
+  const roteamento = useRouter();
   useEffect(() => {
     const profileGit = async function () {
      await fetch(`https://api.github.com/users/${userName}`)
         .then((resp) => resp.json())
         .then((data) => {
-          setObj(data);
+          setObj(data)
           console.log(data);
         })
         .catch((erro) => {
@@ -37,8 +37,11 @@ export default function PaginaInicial() {
         });
     };
     profileGit();
-  }, []);
-
+  });
+  function handleChange(e) {
+    e.preventDefault();
+    setObj({ ...obj, [e.target.name]: e.target.value });
+  }
   return (
     <>
       <Box
@@ -164,7 +167,7 @@ export default function PaginaInicial() {
                 borderRadius: "1000px",
               }}
             >
-              {userName}
+              Username: {userName}
             </Text>
             <Text
               variant="body4"
@@ -175,7 +178,7 @@ export default function PaginaInicial() {
                 borderRadius: "1000px",
               }}
             >
-              {obj.name}
+              Nome: {obj.name}
             </Text>
             <Text
               variant="body4"
@@ -186,7 +189,7 @@ export default function PaginaInicial() {
                 borderRadius: "1000px",
               }}
             >
-              {obj.twitter_username}
+              Followers: {obj.followers} | Following: {obj.following}
             </Text>
           </Box>
           {/* Photo Area */}
