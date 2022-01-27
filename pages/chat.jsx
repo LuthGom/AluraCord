@@ -8,7 +8,7 @@ export default function PaginaDoChat() {
   function handleNovaMensagem(novaMensagem) {
     const mensagem = {
       id: listaDeMensagens.length + 1,
-      de: "user",
+      de: "LuthGom",
       texto: novaMensagem,
     };
     setListaDeMensagens([mensagem, ...listaDeMensagens]);
@@ -21,7 +21,7 @@ export default function PaginaDoChat() {
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: appConfig.theme.colors.primary[500],
-        backgroundImage: `url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)`,
+        backgroundImage: `url(https://mcdn.wallpapersafari.com/medium/46/32/JKeQ3d.jpg)`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundBlendMode: "multiply",
@@ -35,7 +35,7 @@ export default function PaginaDoChat() {
           flex: 1,
           boxShadow: "0 2px 10px 0 rgb(0 0 0 / 20%)",
           borderRadius: "5px",
-          backgroundColor: appConfig.theme.colors.neutrals[700],
+          backgroundColor: appConfig.theme.colors.primary[100],
           height: "100%",
           maxWidth: "95%",
           maxHeight: "95vh",
@@ -158,7 +158,7 @@ function MessageList(props) {
                   display: "inline-block",
                   marginRight: "8px",
                 }}
-                src={`https://github.com/vanessametonini.png`}
+                src={`https://github.com/LuthGom.png`}
               />
               <Text tag="strong">{mensagem.de}</Text>
               <Text
