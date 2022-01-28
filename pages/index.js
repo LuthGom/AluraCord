@@ -21,7 +21,7 @@ function Titulo(props) {
 
 export default function PaginaInicial() {
   const [userName, setUserName] = useState("");
-  const [obj, setObj] = useState();
+  const [obj, setObj] = useState('');
   const roteamento = useRouter();
   useEffect(() => {
     const profileGit = async function () {
@@ -75,6 +75,7 @@ export default function PaginaInicial() {
             as="form"
             onSubmit={function (infosDoEvento) {
               infosDoEvento.preventDefault();
+              console.log("Alguém submeteu o form");
               roteamento.push(`/chat?username=${userName}`);
             }}
             styleSheet={{
@@ -100,6 +101,7 @@ export default function PaginaInicial() {
 
             <TextField
               onChange={function (event) {
+                console.log("usuario digitou", event.target.value);
                 const valor = event.target.value;
                 setUserName(valor);
               }}
