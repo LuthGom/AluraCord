@@ -20,7 +20,7 @@ function Titulo(props) {
 }
 
 export default function PaginaInicial() {
-  const [userName, setUserName] = useState("LuthGom");
+  const [userName, setUserName] = useState("");
   const [obj, setObj] = useState("");
   const roteamento = useRouter();
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function PaginaInicial() {
         });
     };
     profileGit();
-  });
+  }, []);
 
   return (
     <>
@@ -76,8 +76,7 @@ export default function PaginaInicial() {
             onSubmit={function (infosDoEvento) {
               infosDoEvento.preventDefault();
               console.log("Alguém submeteu o form");
-              roteamento.push("/chat");
-              // window.location.href = '/chat';
+              roteamento.push(`/chat?username=${userName}`);
             }}
             styleSheet={{
               display: "flex",
