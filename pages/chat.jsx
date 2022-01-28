@@ -1,18 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, TextField, Text, Button, Image } from "@skynexui/components";
 import appConfig from "../config.json";
+import { createClient } from "@supabase/supabase-js";
+
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMwOTMwMiwiZXhwIjoxOTU4ODg1MzAyfQ.KtPyMN_qe-xxxztvKPWuSCGGtKliMHX44Q3egabkaF4";
+
+const SUPABASE_URL = "https://oneucpzdipulqwudbxni.supabase.co";
+
+let supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 export default function PaginaDoChat() {
   const [mensagem, setMensagem] = useState("");
   const [listaDeMensagens, setListaDeMensagens] = useState([]);
 
+  useEffect(() => {
+    supabase
+      .from("mensagens")
+      .select("*")
+      .order('id', {ascending: false})
+      .then(({ data }) => {
+        console.log("Dados: ", data);
+        setListaDeMensagens(data);
+      });
+  }, []);
+
   function handleNovaMensagem(novaMensagem) {
     const mensagem = {
-      id: listaDeMensagens.length + 1,
-      de: "LuthGom",
+      // id: listaDeMensagens.length + 1,
+      de: "thaissilvr",
       texto: novaMensagem,
     };
-    setListaDeMensagens([mensagem, ...listaDeMensagens]);
-    setMensagem("");
+
+    supabase
+    .from('mensagens')
+    .insert([mensagem])
+    .then((data) =>{
+      console.log("testando", data);
+      setListaDeMensagens([mensagem, ...listaDeMensagens]);
+      setMensagem("");
+    })
+
   }
   return (
     <Box
@@ -158,7 +186,7 @@ function MessageList(props) {
                   display: "inline-block",
                   marginRight: "8px",
                 }}
-                src={`https://github.com/LuthGom.png`}
+                src={`https://github.com/${mensagem.de}.png`}
               />
               <Text tag="strong">{mensagem.de}</Text>
               <Text

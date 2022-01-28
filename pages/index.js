@@ -29,7 +29,6 @@ export default function PaginaInicial() {
         .then((resp) => resp.json())
         .then((data) => {
           setObj(data)
-          console.log(data);
         })
         .catch((erro) => {
           console.log(erro);
