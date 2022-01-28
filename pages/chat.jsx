@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, TextField, Text, Button, Image } from "@skynexui/components";
 import appConfig from "../config.json";
 import { createClient } from "@supabase/supabase-js";
-
+import { useRouter } from "next/router";
 const SUPABASE_ANON_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMwOTMwMiwiZXhwIjoxOTU4ODg1MzAyfQ.KtPyMN_qe-xxxztvKPWuSCGGtKliMHX44Q3egabkaF4";
 
@@ -11,6 +11,8 @@ const SUPABASE_URL = "https://oneucpzdipulqwudbxni.supabase.co";
 let supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function PaginaDoChat() {
+  const roteamento = useRouter();
+  const usuarioLogado = roteamento.query.username
   const [mensagem, setMensagem] = useState("");
   const [listaDeMensagens, setListaDeMensagens] = useState([]);
 
@@ -18,7 +20,7 @@ export default function PaginaDoChat() {
     supabase
       .from("mensagens")
       .select("*")
-      .order('id', {ascending: false})
+      .order("id", { ascending: false })
       .then(({ data }) => {
         console.log("Dados: ", data);
         setListaDeMensagens(data);
@@ -27,20 +29,18 @@ export default function PaginaDoChat() {
 
   function handleNovaMensagem(novaMensagem) {
     const mensagem = {
-      // id: listaDeMensagens.length + 1,
-      de: "thaissilvr",
+      de: usuarioLogado,
       texto: novaMensagem,
     };
 
     supabase
-    .from('mensagens')
-    .insert([mensagem])
-    .then((data) =>{
-      console.log("testando", data);
-      setListaDeMensagens([mensagem, ...listaDeMensagens]);
-      setMensagem("");
-    })
-
+      .from("mensagens")
+      .insert([mensagem])
+      .then((data) => {
+        console.log("testando", data);
+        setListaDeMensagens([mensagem, ...listaDeMensagens]);
+        setMensagem("");
+      });
   }
   return (
     <Box
