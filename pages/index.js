@@ -21,7 +21,7 @@ function Titulo(props) {
 
 export default function PaginaInicial() {
   const [userName, setUserName] = useState("");
-  const [obj, setObj] = useState("");
+  const [obj, setObj] = useState('');
   const roteamento = useRouter();
   useEffect(() => {
     const profileGit = async function () {
