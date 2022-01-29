@@ -21,7 +21,6 @@ function escutaMensagemEmTempoReal(addMensagem) {
     .subscribe();
 }
 
-
 export default function PaginaDoChat() {
   const roteamento = useRouter();
   const usuarioLogado = roteamento.query.username;
@@ -129,11 +128,23 @@ export default function PaginaDoChat() {
                 backgroundColor: appConfig.theme.colors.neutrals[800],
                 marginRight: "12px",
                 color: appConfig.theme.colors.neutrals[200],
+                border: `1px solid ${appConfig.theme.colors.neutrals["300"]}`,
               }}
             />
             <ButtonSendSticker
               onStickerClick={(sticker) => {
                 handleNovaMensagem(`:sticker:${sticker}`);
+              }}
+            />
+            <Button
+              variant="tertiary"
+              colorVariant="neutral"
+              label="Enviar"
+              onClick={(e) => {
+                if (mensagem.length >= 2) {
+                  e.preventDefault();
+                  handleNovaMensagem(mensagem);
+                }
               }}
             />
           </Box>
@@ -187,13 +198,13 @@ function MessageList(props) {
             tag="li"
             styleSheet={{
               borderRadius: "5px",
-              border: `1px solid ${appConfig.theme.colors.neutrals['000']}`,
+              border: `1px solid ${appConfig.theme.colors.neutrals["000"]}`,
               padding: "6px",
               marginBottom: "12px",
               hover: {
                 backgroundColor: appConfig.theme.colors.neutrals[700],
               },
-              width: 'fit-content',
+              width: "fit-content",
             }}
           >
             <Box
@@ -211,7 +222,9 @@ function MessageList(props) {
                 }}
                 src={`https://github.com/${mensagem.de}.png`}
               />
+
               <Text tag="strong">{mensagem.de}</Text>
+
               <Text
                 styleSheet={{
                   fontSize: "10px",
@@ -222,6 +235,7 @@ function MessageList(props) {
               >
                 {new Date().toLocaleDateString()}
               </Text>
+              <Button variant="tertiary" colorVariant="neutral" label="x" />
             </Box>
             {mensagem.texto.startsWith(":sticker:") ? (
               <Image src={mensagem.texto.replace(":sticker:", "")} />
