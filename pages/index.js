@@ -20,7 +20,7 @@ function Titulo(props) {
 }
 
 export default function PaginaInicial() {
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("LuthGom");
   const [obj, setObj] = useState('');
   const roteamento = useRouter();
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function PaginaInicial() {
         });
     };
     profileGit();
-  },{});
+  }, []);
 
   return (
     <>
