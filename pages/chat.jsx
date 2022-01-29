@@ -21,6 +21,7 @@ function escutaMensagemEmTempoReal(addMensagem) {
     .subscribe();
 }
 
+
 export default function PaginaDoChat() {
   const roteamento = useRouter();
   const usuarioLogado = roteamento.query.username;
@@ -91,7 +92,7 @@ export default function PaginaDoChat() {
             display: "flex",
             flex: 1,
             height: "80%",
-            backgroundColor: appConfig.theme.colors.neutrals[600],
+            backgroundColor: appConfig.theme.colors.neutrals[800],
             flexDirection: "column",
             borderRadius: "5px",
             padding: "16px",
@@ -171,7 +172,7 @@ function MessageList(props) {
       key={121345}
       tag="ul"
       styleSheet={{
-        overflow: "scroll",
+        overflow: "auto",
         display: "flex",
         flexDirection: "column-reverse",
         flex: 1,
@@ -186,11 +187,13 @@ function MessageList(props) {
             tag="li"
             styleSheet={{
               borderRadius: "5px",
+              border: `1px solid ${appConfig.theme.colors.neutrals['000']}`,
               padding: "6px",
               marginBottom: "12px",
               hover: {
                 backgroundColor: appConfig.theme.colors.neutrals[700],
               },
+              width: 'fit-content',
             }}
           >
             <Box
